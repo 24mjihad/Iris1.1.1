@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Iris Whiteboard - AI-Powered Digital Canvas</title>
+    <meta name="description" content="Create, collaborate, and visualize ideas with our AI-powered digital whiteboard">
+    
+    <!-- Excalidraw CSS -->
+    <link
+      rel="stylesheet"
+      href="https://esm.sh/@excalidraw/excalidraw@0.18.0/dist/dev/index.css"
+    />
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="./styles.css" />
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Excalidraw Configuration -->
+    <script>
+      window.EXCALIDRAW_ASSET_PATH = "https://esm.sh/@excalidraw/excalidraw@0.18.0/dist/prod/";
+    </script>
+    
+    <!-- Import Maps -->
+    <script type="importmap">
+      {
+        "imports": {
+          "react": "https://esm.sh/react@19.0.0",
+          "react/jsx-runtime": "https://esm.sh/react@19.0.0/jsx-runtime",
+          "react-dom": "https://esm.sh/react-dom@19.0.0"
+        }
+      }
+    </script>
+  </head>
+
+  <body>
+    <!-- Header -->
+    <header class="header">
+      <div class="header-content">
+        <div class="logo-section">
+          <div class="logo">
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="32" height="32" rx="8" fill="url(#gradient1)"/>
+              <path d="M8 12L16 8L24 12L16 16L8 12Z" fill="white" fill-opacity="0.9"/>
+              <path d="M8 20L16 16L24 20L16 24L8 20Z" fill="white" fill-opacity="0.7"/>
+              <defs>
+                <linearGradient id="gradient1" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#8B5CF6"/>
+                  <stop offset="1" stop-color="#3B82F6"/>
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+          <h1 class="logo-text">Iris Whiteboard</h1>
+        </div>
+        
+        <nav class="nav">
+          <button class="nav-button active" id="canvasTab">Canvas</button>
+          <button class="nav-button" id="savedCanvasesTab">Saved Canvases</button>
+          <button class="nav-button">Templates</button>
+          <button class="nav-button">Collaborate</button>
+        </nav>
+        
+        <div class="header-actions">
+          <button class="action-button secondary">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M14 8C14 11.3137 11.3137 14 8 14C4.68629 14 2 11.3137 2 8C2 4.68629 4.68629 2 8 2C11.3137 2 14 4.68629 14 8Z" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M8 5V8L10 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+            History
+          </button>
+          <button class="action-button primary">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M8 3V13M3 8H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+            Share
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <div class="sidebar-section">
+          <h3 class="sidebar-title">Quick Actions</h3>
+          <div class="quick-actions">
+            <button class="quick-action-btn" id="saveCanvas">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M13 3H3C1.89543 3 1 3.89543 1 5V13C1 14.1046 1.89543 15 3 15H13C14.1046 15 15 14.1046 15 13V5C15 3.89543 14.1046 3 13 3Z" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M4 8L8 12L12 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              Save Canvas
+            </button>
+            <button class="quick-action-btn" id="newCanvas">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M8 3V13M3 8H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+              New Canvas
+            </button>
+            <button class="quick-action-btn" id="resetScene">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M1 4V10C1 11.6569 2.34315 13 4 13H12C13.6569 13 15 11.6569 15 10V4C15 2.34315 13.6569 1 12 1H4C2.34315 1 1 2.34315 1 4Z" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M6 7L10 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+              Clear Canvas
+            </button>
+          </div>
+        </div>
+
+        <div class="sidebar-section">
+          <h3 class="sidebar-title">View Options</h3>
+          <div class="view-options">
+            <label class="toggle-option">
+              <input type="checkbox" id="viewMode" />
+              <span class="toggle-slider"></span>
+              <span class="toggle-label">View Mode</span>
+            </label>
+            <label class="toggle-option">
+              <input type="checkbox" id="zenMode" />
+              <span class="toggle-slider"></span>
+              <span class="toggle-label">Zen Mode</span>
+            </label>
+            <label class="toggle-option">
+              <input type="checkbox" id="gridMode" />
+              <span class="toggle-slider"></span>
+              <span class="toggle-label">Grid Mode</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="sidebar-section">
+          <h3 class="sidebar-title">AI Assistant</h3>
+          <div class="ai-section">
+            <div class="ai-status">
+              <div class="ai-indicator"></div>
+              <span>Ready to help</span>
+            </div>
+            <button class="ai-button">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M8 1L10.5 6H15L11 9.5L12.5 15L8 12L3.5 15L5 9.5L1 6H5.5L8 1Z" fill="currentColor"/>
+              </svg>
+              Ask AI
+            </button>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Canvas Area -->
+      <div class="canvas-container">
+        <div class="canvas-header">
+          <div class="canvas-info">
+            <h2 class="canvas-title">Untitled Canvas</h2>
+            <span class="canvas-meta">Last saved: Auto-save enabled</span>
+          </div>
+          <div class="canvas-controls">
+            <button class="control-btn" id="newCanvasControl" title="New Canvas">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M8 3V13M3 8H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+            </button>
+            <button class="control-btn" id="clearCanvasControl" title="Clear Canvas">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M13 3L3 13M3 3L13 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+        
+        <div class="excalidraw-wrapper" id="excalidraw-container">
+          <div id="app"></div>
+          <!-- Screenshot overlay -->
+          <div class="screenshot-overlay" id="screenshotOverlay">
+            <div class="screenshot-instructions">
+              <p>Click and drag to select an area of the canvas</p>
+              <button class="cancel-screenshot" id="cancelScreenshot">Cancel</button>
+            </div>
+            <div class="selection-box" id="selectionBox"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- AI Results Panel -->
+      <div class="ai-results-panel" id="aiResultsPanel">
+        <div class="ai-results-header">
+          <h3>AI Chat</h3>
+          <button class="close-panel" id="closePanel">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M12 4L4 12M4 4L12 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </button>
+        </div>
+        <div class="ai-results-content" id="aiResultsContent">
+          <div class="empty-state">
+            <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+              <path d="M24 4L30 18H44L34 28L38 44L24 36L10 44L14 28L4 18H18L24 4Z" stroke="currentColor" stroke-width="2" fill="none"/>
+            </svg>
+            <p>Start a conversation with AI about your canvas designs</p>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+      <div class="loading-content">
+        <div class="loading-spinner"></div>
+        <h3>Initializing Iris Whiteboard</h3>
+        <p>Preparing your AI-powered canvas...</p>
+      </div>
+    </div>
+
+    <!-- Text Input Modal -->
+    <div class="text-input-modal" id="textInputModal">
+      <div class="text-input-content">
+        <div class="text-input-header">
+          <h3>Chat with AI about your selection</h3>
+          <p>Ask me anything about this part of your canvas - I'm here to help!</p>
+        </div>
+        <textarea 
+          class="text-input-field" 
+          id="textInputField" 
+          placeholder="Ask me anything about this part of your canvas! For example: 'What do you think about this design?', 'How can I improve this flow?', 'What's missing here?'"
+        ></textarea>
+        <div class="text-input-actions">
+          <button class="text-input-btn" id="cancelTextInput">Cancel</button>
+          <button class="text-input-btn primary" id="submitTextInput">Start Chat</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Save Canvas Modal -->
+    <div class="save-canvas-modal" id="saveCanvasModal">
+      <div class="save-canvas-content">
+        <div class="save-canvas-header">
+          <h3>Save Canvas</h3>
+          <p>Give your canvas a name to save it</p>
+        </div>
+        <input 
+          type="text" 
+          class="save-canvas-input" 
+          id="saveCanvasInput" 
+          placeholder="Enter canvas name..."
+          maxlength="50"
+        />
+        <div class="save-canvas-actions">
+          <button class="save-canvas-btn" id="cancelSaveCanvas">Cancel</button>
+          <button class="save-canvas-btn primary" id="confirmSaveCanvas">Save Canvas</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Saved Canvases Modal -->
+    <div class="saved-canvases-modal" id="savedCanvasesModal">
+      <div class="saved-canvases-content">
+        <div class="saved-canvases-header">
+          <h3>Saved Canvases</h3>
+          <button class="close-modal" id="closeSavedCanvases">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M12 4L4 12M4 4L12 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </button>
+        </div>
+        <div class="saved-canvases-list" id="savedCanvasesList">
+          <div class="empty-canvases-state">
+            <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+              <rect x="8" y="8" width="32" height="24" rx="2" stroke="currentColor" stroke-width="2" fill="none"/>
+              <circle cx="16" cy="18" r="2" fill="currentColor"/>
+              <path d="M12 26L18 20L24 26L36 14" stroke="currentColor" stroke-width="2" fill="none"/>
+            </svg>
+            <p>No saved canvases yet</p>
+            <small>Create and save your first canvas to see it here</small>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Clear Canvas Confirmation Modal -->
+    <div class="clear-canvas-modal" id="clearCanvasModal">
+      <div class="clear-canvas-content">
+        <div class="clear-canvas-header">
+          <svg class="warning-icon" viewBox="0 0 64 64" fill="none">
+            <circle cx="32" cy="32" r="30" stroke="currentColor" stroke-width="4"/>
+            <path d="M32 20V36" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+            <circle cx="32" cy="44" r="2" fill="currentColor"/>
+          </svg>
+          <h3>Clear Canvas?</h3>
+          <p>This will permanently delete all elements on the current canvas. This action cannot be undone.</p>
+        </div>
+        <div class="clear-canvas-actions">
+          <button class="clear-canvas-btn" id="cancelClear">Cancel</button>
+          <button class="clear-canvas-btn danger" id="confirmClear">Clear Canvas</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Delete Canvas Confirmation Modal -->
+    <div class="delete-canvas-modal" id="deleteCanvasModal">
+      <div class="delete-canvas-content">
+        <div class="delete-canvas-header">
+          <div class="warning-icon-container">
+            <div class="warning-icon-bg">
+              <svg class="warning-icon" viewBox="0 0 24 24" fill="none">
+                <path d="M12 9V13M12 17H12.01M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </div>
+          <h3>Delete Canvas</h3>
+          <p>Are you sure you want to permanently delete <span class="canvas-name" id="deleteCanvasName"></span>?</p>
+          <div class="warning-note">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M8 7V11M8 5H8.01M15 8C15 11.866 11.866 15 8 15C4.134 15 1 11.866 1 8C1 4.134 4.134 1 8 1C11.866 1 15 4.134 15 8Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span>This action cannot be undone and will permanently remove all canvas data.</span>
+          </div>
+        </div>
+        <div class="delete-canvas-actions">
+          <button class="delete-canvas-btn secondary" id="cancelDelete">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M6 6L10 10M10 6L6 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+            Cancel
+          </button>
+          <button class="delete-canvas-btn danger" id="confirmDelete">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M6 2L10 2M2 4H14M12.6667 4L12.1991 11.0129C12.129 12.065 12.0939 12.5911 11.8667 12.99C11.6666 13.3412 11.3648 13.6235 11.0011 13.7998C10.588 14 10.0607 14 9.00623 14H6.99377C5.93927 14 5.41202 14 4.99889 13.7998C4.63517 13.6235 4.33339 13.3412 4.13332 12.99C3.90607 12.5911 3.871 12.065 3.80086 11.0129L3.33333 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Delete Canvas
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- New Canvas Confirmation Modal -->
+    <div class="new-canvas-modal" id="newCanvasModal">
+      <div class="new-canvas-content">
+        <div class="new-canvas-header">
+          <div class="new-icon-container">
+            <div class="new-icon-bg">
+              <svg class="new-icon" viewBox="0 0 24 24" fill="none">
+                <path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none"/>
+              </svg>
+            </div>
+          </div>
+          <h3>Create New Canvas</h3>
+          <p>Starting fresh will help you bring new ideas to life</p>
+          <div class="info-note">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M8 11V7M8 5H8.01M15 8C15 11.866 11.866 15 8 15C4.134 15 1 11.866 1 8C1 4.134 4.134 1 8 1C11.866 1 15 4.134 15 8Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span>Any unsaved changes to your current canvas will be lost. Consider saving your work first.</span>
+          </div>
+        </div>
+        <div class="new-canvas-actions">
+          <button class="new-canvas-btn secondary" id="cancelNewCanvas">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M6 6L10 10M10 6L6 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+            Cancel
+          </button>
+          <button class="new-canvas-btn primary" id="confirmNewCanvas">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <rect x="3" y="3" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1.5" fill="none"/>
+            </svg>
+            Create New Canvas
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>
