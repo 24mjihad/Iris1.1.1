@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Iris Whiteboard - Sign In</title>
+    <meta name="description" content="Sign in to your AI-powered digital whiteboard">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="./auth-styles.css" />
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  </head>
+
+  <body class="auth-body">
+    <!-- Background Effects -->
+    <div class="auth-background">
+      <div class="floating-particles"></div>
+      <div class="grid-pattern"></div>
+      <div class="gradient-orbs">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+      </div>
+    </div>
+
+    <!-- Auth Container -->
+    <div class="auth-container">
+      <!-- Left Panel - Branding -->
+      <div class="auth-brand-panel">
+        <div class="brand-content">
+          <div class="brand-logo">
+            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="48" height="48" rx="12" fill="url(#brandGradient)"/>
+              <path d="M12 18L24 12L36 18L24 24L12 18Z" fill="white" fill-opacity="0.9"/>
+              <path d="M12 30L24 24L36 30L24 36L12 30Z" fill="white" fill-opacity="0.7"/>
+              <defs>
+                <linearGradient id="brandGradient" x1="0" y1="0" x2="48" y2="48" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#8B5CF6"/>
+                  <stop offset="0.5" stop-color="#6366F1"/>
+                  <stop offset="1" stop-color="#3B82F6"/>
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+          <h1 class="brand-title">Iris Whiteboard</h1>
+          <p class="brand-subtitle">AI-Powered Digital Canvas</p>
+          
+          <div class="feature-list">
+            <div class="feature-item">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M10 2L13 8H19L14.5 12L16 18L10 15L4 18L5.5 12L1 8H7L10 2Z" fill="currentColor"/>
+              </svg>
+              <span>AI-powered design assistance</span>
+            </div>
+            <div class="feature-item">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M17 3V17C17 17.5523 16.5523 18 16 18H4C3.44772 18 3 17.5523 3 17V3C3 2.44772 3.44772 2 4 2H16C16.5523 2 17 2.44772 17 3Z" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                <path d="M7 7H13M7 10H13M7 13H10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+              <span>Infinite canvas collaboration</span>
+            </div>
+            <div class="feature-item">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M13 7L7 13M7 7L13 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                <circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.5" fill="none"/>
+              </svg>
+              <span>Real-time synchronization</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Panel - Auth Forms -->
+      <div class="auth-form-panel">
+        <div class="auth-form-container">
+          <!-- Loading State -->
+          <div class="auth-loading" id="authLoading">
+            <div class="loading-spinner"></div>
+            <p>Connecting to Iris...</p>
+          </div>
+
+          <!-- Sign In Form -->
+          <div class="auth-form active" id="signInForm">
+            <div class="form-header">
+              <h2>Welcome back</h2>
+              <p>Sign in to your Iris Whiteboard account</p>
+            </div>
+
+            <form class="auth-form-content" id="signInFormContent">
+              <div class="form-group">
+                <label for="signInEmail">Email</label>
+                <input 
+                  type="email" 
+                  id="signInEmail" 
+                  name="email" 
+                  placeholder="Enter your email"
+                  required
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="signInPassword">Password</label>
+                <input 
+                  type="password" 
+                  id="signInPassword" 
+                  name="password" 
+                  placeholder="Enter your password"
+                  required
+                />
+              </div>
+
+              <div class="form-options">
+                <label class="checkbox-container">
+                  <input type="checkbox" id="rememberMe">
+                  <span class="checkmark"></span>
+                  Remember me
+                </label>
+                <button type="button" class="forgot-password-btn" id="forgotPasswordBtn">
+                  Forgot password?
+                </button>
+              </div>
+
+              <button type="submit" class="auth-submit-btn">
+                <span class="btn-text">Sign In</span>
+                <svg class="btn-icon" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <path d="M6 12L10 8L6 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+
+              <div class="auth-divider">
+                <span>or continue with</span>
+              </div>
+
+              <div class="social-auth">
+                <button type="button" class="social-btn google-btn" id="googleSignIn">
+                  <svg width="18" height="18" viewBox="0 0 18 18">
+                    <path fill="#4285F4" d="M16.51 8H8.98v3h4.3c-.18 1-.74 1.48-1.6 2.04v2.01h2.6a7.8 7.8 0 0 0 2.38-5.88c0-.57-.05-.66-.15-1.18z"/>
+                    <path fill="#34A853" d="M8.98 17c2.16 0 3.97-.72 5.3-1.94l-2.6-2.04a4.8 4.8 0 0 1-2.7.75 4.8 4.8 0 0 1-4.52-3.26H1.83v2.07A8 8 0 0 0 8.98 17z"/>
+                    <path fill="#FBBC05" d="M4.46 10.51a4.8 4.8 0 0 1-.25-1.51c0-.52.09-1.03.25-1.51V5.42H1.83a8 8 0 0 0 0 7.16l2.63-2.07z"/>
+                    <path fill="#EA4335" d="M8.98 4.24c1.17 0 2.23.4 3.06 1.2l2.3-2.3A8 8 0 0 0 8.98 1 8 8 0 0 0 1.83 5.42L4.46 7.5a4.8 4.8 0 0 1 4.52-3.26z"/>
+                  </svg>
+                  Google
+                </button>
+                <button type="button" class="social-btn github-btn" id="githubSignIn">
+                  <svg width="18" height="18" viewBox="0 0 18 18" fill="currentColor">
+                    <path d="M9 1C4.58 1 1 4.58 1 9c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.64 7.64 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 17 9c0-4.42-3.58-8-8-8z"/>
+                  </svg>
+                  GitHub
+                </button>
+              </div>
+            </form>
+
+            <div class="auth-switch">
+              <p>Don't have an account? <button type="button" class="switch-btn" id="showSignUp">Sign up</button></p>
+            </div>
+          </div>
+
+          <!-- Sign Up Form -->
+          <div class="auth-form" id="signUpForm">
+            <div class="form-header">
+              <h2>Create account</h2>
+              <p>Join Iris Whiteboard and start creating</p>
+            </div>
+
+            <form class="auth-form-content" id="signUpFormContent">
+              <div class="form-group">
+                <label for="signUpName">Full Name</label>
+                <input 
+                  type="text" 
+                  id="signUpName" 
+                  name="name" 
+                  placeholder="Enter your full name"
+                  required
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="signUpEmail">Email</label>
+                <input 
+                  type="email" 
+                  id="signUpEmail" 
+                  name="email" 
+                  placeholder="Enter your email"
+                  required
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="signUpPassword">Password</label>
+                <input 
+                  type="password" 
+                  id="signUpPassword" 
+                  name="password" 
+                  placeholder="Create a password"
+                  required
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="confirmPassword">Confirm Password</label>
+                <input 
+                  type="password" 
+                  id="confirmPassword" 
+                  name="confirmPassword" 
+                  placeholder="Confirm your password"
+                  required
+                />
+              </div>
+
+              <div class="form-options">
+                <label class="checkbox-container">
+                  <input type="checkbox" id="agreeTerms" required>
+                  <span class="checkmark"></span>
+                  I agree to the <a href="#" class="terms-link">Terms & Conditions</a>
+                </label>
+              </div>
+
+              <button type="submit" class="auth-submit-btn">
+                <span class="btn-text">Create Account</span>
+                <svg class="btn-icon" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <path d="M6 12L10 8L6 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+
+              <div class="auth-divider">
+                <span>or continue with</span>
+              </div>
+
+              <div class="social-auth">
+                <button type="button" class="social-btn google-btn" id="googleSignUp">
+                  <svg width="18" height="18" viewBox="0 0 18 18">
+                    <path fill="#4285F4" d="M16.51 8H8.98v3h4.3c-.18 1-.74 1.48-1.6 2.04v2.01h2.6a7.8 7.8 0 0 0 2.38-5.88c0-.57-.05-.66-.15-1.18z"/>
+                    <path fill="#34A853" d="M8.98 17c2.16 0 3.97-.72 5.3-1.94l-2.6-2.04a4.8 4.8 0 0 1-2.7.75 4.8 4.8 0 0 1-4.52-3.26H1.83v2.07A8 8 0 0 0 8.98 17z"/>
+                    <path fill="#FBBC05" d="M4.46 10.51a4.8 4.8 0 0 1-.25-1.51c0-.52.09-1.03.25-1.51V5.42H1.83a8 8 0 0 0 0 7.16l2.63-2.07z"/>
+                    <path fill="#EA4335" d="M8.98 4.24c1.17 0 2.23.4 3.06 1.2l2.3-2.3A8 8 0 0 0 8.98 1 8 8 0 0 0 1.83 5.42L4.46 7.5a4.8 4.8 0 0 1 4.52-3.26z"/>
+                  </svg>
+                  Google
+                </button>
+                <button type="button" class="social-btn github-btn" id="githubSignUp">
+                  <svg width="18" height="18" viewBox="0 0 18 18" fill="currentColor">
+                    <path d="M9 1C4.58 1 1 4.58 1 9c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.64 7.64 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 17 9c0-4.42-3.58-8-8-8z"/>
+                  </svg>
+                  GitHub
+                </button>
+              </div>
+            </form>
+
+            <div class="auth-switch">
+              <p>Already have an account? <button type="button" class="switch-btn" id="showSignIn">Sign in</button></p>
+            </div>
+          </div>
+
+          <!-- Forgot Password Form -->
+          <div class="auth-form" id="forgotPasswordForm">
+            <div class="form-header">
+              <h2>Reset password</h2>
+              <p>Enter your email to receive a reset link</p>
+            </div>
+
+            <form class="auth-form-content" id="forgotPasswordFormContent">
+              <div class="form-group">
+                <label for="resetEmail">Email</label>
+                <input 
+                  type="email" 
+                  id="resetEmail" 
+                  name="email" 
+                  placeholder="Enter your email"
+                  required
+                />
+              </div>
+
+              <button type="submit" class="auth-submit-btn">
+                <span class="btn-text">Send Reset Link</span>
+                <svg class="btn-icon" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <path d="M6 12L10 8L6 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+            </form>
+
+            <div class="auth-switch">
+              <p>Remember your password? <button type="button" class="switch-btn" id="backToSignIn">Sign in</button></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Error/Success Messages -->
+    <div class="message-toast" id="messageToast">
+      <div class="toast-content">
+        <svg class="toast-icon" width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <path d="M10 18C14.4183 18 18 14.4183 18 10C18 5.58172 14.4183 2 10 2C5.58172 2 2 5.58172 2 10C2 14.4183 5.58172 18 10 18Z" fill="currentColor"/>
+          <path d="M13 7L8.5 11.5L7 10" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span class="toast-message"></span>
+      </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="./auth.js"></script>
+  </body>
+</html>

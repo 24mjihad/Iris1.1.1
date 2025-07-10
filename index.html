@@ -20,7 +20,16 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
-    <!-- Excalidraw Configuration -->
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <!-- Authentication Protection -->
+    <script src="./auth-protection.js"></script>
+    
+    <!-- User Account Manager -->
+    <script src="./user-account-manager.js"></script>
+    
+    <!-- Excalidraw Co  nfiguration -->
     <script>
       window.EXCALIDRAW_ASSET_PATH = "https://esm.sh/@excalidraw/excalidraw@0.18.0/dist/prod/";
     </script>
@@ -37,12 +46,12 @@
     </script>
   </head>
 
-  <body>
+  <body class="matrix-rain">
     <!-- Header -->
     <header class="header">
       <div class="header-content">
         <div class="logo-section">
-          <div class="logo">
+          <div class="logo animate-breathing">
             <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
               <rect width="32" height="32" rx="8" fill="url(#gradient1)"/>
               <path d="M8 12L16 8L24 12L16 16L8 12Z" fill="white" fill-opacity="0.9"/>
@@ -55,25 +64,25 @@
               </defs>
             </svg>
           </div>
-          <h1 class="logo-text">Iris Whiteboard</h1>
+          <h1 class="logo-text animate-glow">Iris Whiteboard</h1>
         </div>
         
-        <nav class="nav">
-          <button class="nav-button active" id="canvasTab">Canvas</button>
-          <button class="nav-button" id="savedCanvasesTab">Saved Canvases</button>
-          <button class="nav-button">Templates</button>
-          <button class="nav-button">Collaborate</button>
+        <nav class="nav animate-slideDown">
+          <button class="nav-button active animate-glow" id="canvasTab">Canvas</button>
+          <button class="nav-button animate-magnetic" id="savedCanvasesTab">Saved Canvases</button>
+          <button class="nav-button animate-magnetic">Templates</button>
+          <button class="nav-button animate-magnetic">Collaborate</button>
         </nav>
         
         <div class="header-actions">
-          <button class="action-button secondary">
+          <button class="action-button secondary animate-holographic">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
               <path d="M14 8C14 11.3137 11.3137 14 8 14C4.68629 14 2 11.3137 2 8C2 4.68629 4.68629 2 8 2C11.3137 2 14 4.68629 14 8Z" stroke="currentColor" stroke-width="1.5"/>
               <path d="M8 5V8L10 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
             </svg>
             History
           </button>
-          <button class="action-button primary">
+          <button class="action-button primary cyberpunk-border">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
               <path d="M8 3V13M3 8H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
             </svg>
@@ -86,24 +95,24 @@
     <!-- Main Content -->
     <main class="main">
       <!-- Sidebar -->
-      <aside class="sidebar">
-        <div class="sidebar-section">
-          <h3 class="sidebar-title">Quick Actions</h3>
+      <aside class="sidebar animate-slideInLeft">
+        <div class="sidebar-section animate-fadeIn">
+          <h3 class="sidebar-title animate-shimmer">Quick Actions</h3>
           <div class="quick-actions">
-            <button class="quick-action-btn" id="saveCanvas">
+            <button class="quick-action-btn animate-magnetic" id="saveCanvas">
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                 <path d="M13 3H3C1.89543 3 1 3.89543 1 5V13C1 14.1046 1.89543 15 3 15H13C14.1046 15 15 14.1046 15 13V5C15 3.89543 14.1046 3 13 3Z" stroke="currentColor" stroke-width="1.5"/>
                 <path d="M4 8L8 12L12 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
               Save Canvas
             </button>
-            <button class="quick-action-btn" id="newCanvas">
+            <button class="quick-action-btn animate-magnetic" id="newCanvas">
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                 <path d="M8 3V13M3 8H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
               </svg>
               New Canvas
             </button>
-            <button class="quick-action-btn" id="resetScene">
+            <button class="quick-action-btn animate-magnetic" id="resetScene">
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                 <path d="M1 4V10C1 11.6569 2.34315 13 4 13H12C13.6569 13 15 11.6569 15 10V4C15 2.34315 13.6569 1 12 1H4C2.34315 1 1 2.34315 1 4Z" stroke="currentColor" stroke-width="1.5"/>
                 <path d="M6 7L10 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
@@ -113,20 +122,20 @@
           </div>
         </div>
 
-        <div class="sidebar-section">
-          <h3 class="sidebar-title">View Options</h3>
+        <div class="sidebar-section animate-fadeIn">
+          <h3 class="sidebar-title animate-shimmer">View Options</h3>
           <div class="view-options">
-            <label class="toggle-option">
+            <label class="toggle-option animate-magnetic">
               <input type="checkbox" id="viewMode" />
               <span class="toggle-slider"></span>
               <span class="toggle-label">View Mode</span>
             </label>
-            <label class="toggle-option">
+            <label class="toggle-option animate-magnetic">
               <input type="checkbox" id="zenMode" />
               <span class="toggle-slider"></span>
               <span class="toggle-label">Zen Mode</span>
             </label>
-            <label class="toggle-option">
+            <label class="toggle-option animate-magnetic">
               <input type="checkbox" id="gridMode" />
               <span class="toggle-slider"></span>
               <span class="toggle-label">Grid Mode</span>
@@ -136,12 +145,12 @@
 
         <div class="sidebar-section">
           <h3 class="sidebar-title">AI Assistant</h3>
-          <div class="ai-section">
+          <div class="ai-section animate-electric">
             <div class="ai-status">
-              <div class="ai-indicator"></div>
+              <div class="ai-indicator animate-quantum"></div>
               <span>Ready to help</span>
             </div>
-            <button class="ai-button">
+            <button class="ai-button cyberpunk-border">
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                 <path d="M8 1L10.5 6H15L11 9.5L12.5 15L8 12L3.5 15L5 9.5L1 6H5.5L8 1Z" fill="currentColor"/>
               </svg>
@@ -152,19 +161,19 @@
       </aside>
 
       <!-- Canvas Area -->
-      <div class="canvas-container">
-        <div class="canvas-header">
-          <div class="canvas-info">
-            <h2 class="canvas-title">Untitled Canvas</h2>
+      <div class="canvas-container animate-fadeIn">
+        <div class="canvas-header animate-slideDown">
+          <div class="canvas-info animate-slideInLeft">
+            <h2 class="canvas-title animate-shimmer">Untitled Canvas</h2>
             <span class="canvas-meta">Last saved: Auto-save enabled</span>
           </div>
-          <div class="canvas-controls">
-            <button class="control-btn" id="newCanvasControl" title="New Canvas">
+          <div class="canvas-controls animate-slideInRight">
+            <button class="control-btn animate-magnetic" id="newCanvasControl" title="New Canvas">
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                 <path d="M8 3V13M3 8H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
               </svg>
             </button>
-            <button class="control-btn" id="clearCanvasControl" title="Clear Canvas">
+            <button class="control-btn animate-magnetic" id="clearCanvasControl" title="Clear Canvas">
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                 <path d="M13 3L3 13M3 3L13 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
               </svg>
@@ -186,10 +195,10 @@
       </div>
 
       <!-- AI Results Panel -->
-      <div class="ai-results-panel" id="aiResultsPanel">
+      <div class="ai-results-panel animate-slideInRight" id="aiResultsPanel">
         <div class="ai-results-header">
-          <h3>AI Chat</h3>
-          <button class="close-panel" id="closePanel">
+          <h3 class="animate-glow">AI Chat</h3>
+          <button class="close-panel animate-magnetic" id="closePanel">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
               <path d="M12 4L4 12M4 4L12 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
             </svg>
@@ -284,11 +293,15 @@
     <div class="clear-canvas-modal" id="clearCanvasModal">
       <div class="clear-canvas-content">
         <div class="clear-canvas-header">
-          <svg class="warning-icon" viewBox="0 0 64 64" fill="none">
-            <circle cx="32" cy="32" r="30" stroke="currentColor" stroke-width="4"/>
-            <path d="M32 20V36" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
-            <circle cx="32" cy="44" r="2" fill="currentColor"/>
-          </svg>
+          <div class="warning-icon-container">
+            <div class="warning-icon-bg">
+              <svg class="warning-icon" viewBox="0 0 24 24" fill="none">
+                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                <path d="M12 8V12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <circle cx="12" cy="16" r="1" fill="currentColor"/>
+              </svg>
+            </div>
+          </div>
           <h3>Clear Canvas?</h3>
           <p>This will permanently delete all elements on the current canvas. This action cannot be undone.</p>
         </div>

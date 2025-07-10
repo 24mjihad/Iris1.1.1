@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard - Iris Whiteboard</title>
+    <meta name="description" content="Your Iris Whiteboard dashboard">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="./styles.css" />
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <!-- Authentication Protection -->
+    <script src="./auth-protection.js"></script>
+    
+    <!-- User Account Manager -->
+    <script src="./user-account-manager.js"></script>
+  </head>
+
+  <body class="matrix-rain">
+    <!-- Header -->
+    <header class="header">
+      <div class="header-content">
+        <div class="logo-section">
+          <div class="logo animate-breathing">
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="32" height="32" rx="8" fill="url(#gradient1)"/>
+              <path d="M8 12L16 8L24 12L16 16L8 12Z" fill="white" fill-opacity="0.9"/>
+              <path d="M8 20L16 16L24 20L16 24L8 20Z" fill="white" fill-opacity="0.7"/>
+              <defs>
+                <linearGradient id="gradient1" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#8B5CF6"/>
+                  <stop offset="1" stop-color="#3B82F6"/>
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+          <h1 class="logo-text animate-glow">Iris Dashboard</h1>
+        </div>
+        
+        <nav class="nav animate-slideDown">
+          <a href="index.html" class="nav-button animate-magnetic">Canvas</a>
+          <button class="nav-button active animate-glow">Dashboard</button>
+          <button class="nav-button animate-magnetic">Templates</button>
+          <button class="nav-button animate-magnetic">Settings</button>
+        </nav>
+        
+        <div class="header-actions">
+          <!-- User menu will be inserted here by user-account-manager.js -->
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+      <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 2rem;">
+        <div class="dashboard-header" style="margin-bottom: 3rem; text-align: center;">
+          <h2 style="font-size: 2.5rem; font-weight: 700; color: var(--white); margin-bottom: 1rem; background: linear-gradient(135deg, #8B5CF6, #3B82F6, #22D3EE); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+            👤 Account Management Ready!
+          </h2>
+          <p style="color: var(--gray-300); font-size: 1.2rem; margin-bottom: 2rem;">
+            Click on your profile in the top-right corner to view account information, settings, and sign out. The authentication system is fully functional!
+          </p>
+          <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+            <a href="index.html" style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 1rem 2rem; background: linear-gradient(135deg, #8B5CF6, #3B82F6); color: white; text-decoration: none; border-radius: 12px; font-weight: 600; transition: transform 0.2s;">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M3 3H17C17.5523 3 18 3.44772 18 4V16C18 16.5523 17.5523 17 17 17H3C2.44772 17 2 16.5523 2 16V4C2 3.44772 2.44772 3 3 3Z"/>
+                <path d="M6 8L10 12L14 8"/>
+              </svg>
+              Go to Main Canvas
+            </a>
+            <button onclick="userAccountManager?.signOut()" style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 1rem 2rem; background: rgba(239, 68, 68, 0.8); color: white; border: none; border-radius: 12px; font-weight: 600; cursor: pointer; transition: transform 0.2s;">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M9 21H5C4.44772 21 4 20.5523 4 20V4C4 3.44772 4.44772 3 5 3H9"/>
+                <path d="M16 17L21 12L16 7"/>
+                <path d="M21 12H9"/>
+              </svg>
+              Sign Out & Test Protection
+            </button>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-bottom: 3rem;">
+          <!-- Feature Cards -->
+          <div style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.2); border-radius: 16px; padding: 2rem;">
+            <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+              <div style="width: 48px; height: 48px; background: linear-gradient(135deg, #10B981, #22D3EE); border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                  <path d="M9 12L11 14L15 10"/>
+                  <path d="M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z"/>
+                </svg>
+              </div>
+              <div>
+                <h3 style="color: var(--white); font-size: 1.25rem; font-weight: 600; margin: 0;">User Account Menu</h3>
+                <p style="color: var(--gray-300); margin: 0; font-size: 0.875rem;">View account info, settings, and sign out</p>
+              </div>
+            </div>
+          </div>
+
+          <div style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.2); border-radius: 16px; padding: 2rem;">
+            <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+              <div style="width: 48px; height: 48px; background: linear-gradient(135deg, #8B5CF6, #3B82F6); border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                  <circle cx="12" cy="16" r="1"/>
+                  <path d="M7 11V7C7 5.67392 7.52678 4.40215 8.46447 3.46447C9.40215 2.52678 10.6739 2 12 2C13.3261 2 14.5979 2.52678 15.5355 3.46447C16.4732 4.40215 17 5.67392 17 7V11"/>
+                </svg>
+              </div>
+              <div>
+                <h3 style="color: var(--white); font-size: 1.25rem; font-weight: 600; margin: 0;">Account Information</h3>
+                <p style="color: var(--gray-300); margin: 0; font-size: 0.875rem;">View detailed user profile and statistics</p>
+              </div>
+            </div>
+          </div>
+
+          <div style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.2); border-radius: 16px; padding: 2rem;">
+            <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+              <div style="width: 48px; height: 48px; background: linear-gradient(135deg, #F59E0B, #F97316); border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                  <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z"/>
+                </svg>
+              </div>
+              <div>
+                <h3 style="color: var(--white); font-size: 1.25rem; font-weight: 600; margin: 0;">Secure Sign Out</h3>
+                <p style="color: var(--gray-300); margin: 0; font-size: 0.875rem;">Safe logout with automatic protection</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 2rem; text-align: center;">
+          <h3 style="color: var(--white); margin-bottom: 1rem;">Test the Account Management Features</h3>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 1.5rem;">
+            <div style="text-align: left;">
+              <h4 style="color: #10B981; margin-bottom: 0.5rem;">👤 Account Features:</h4>
+              <ul style="color: var(--gray-300); line-height: 1.6;">
+                <li>Click your profile picture in the top-right corner</li>
+                <li>View detailed account information</li>
+                <li>Access settings (coming soon)</li>
+                <li>Secure sign out with protection</li>
+              </ul>
+            </div>
+            <div style="text-align: left;">
+              <h4 style="color: #3B82F6; margin-bottom: 0.5rem;">🧪 How to Test:</h4>
+              <ol style="color: var(--gray-300); line-height: 1.6;">
+                <li>Look for your profile menu in the header</li>
+                <li>Click "Account Information" to see your details</li>
+                <li>Try the sign out option to test protection</li>
+                <li>Open in incognito to test authentication flow</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Fallback Sign Out Function -->
+    <script>
+      // Fallback sign out function if user account manager isn't available
+      async function signOut() {
+        if (userAccountManager) {
+          return userAccountManager.signOut();
+        }
+        
+        try {
+          // Wait for Supabase to be available
+          while (!window.supabase) {
+            await new Promise(resolve => setTimeout(resolve, 100));
+          }
+          
+          const { createClient } = window.supabase;
+          const supabaseClient = createClient(
+            'https://qqmsfraosocolpslrfvq.supabase.co',
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFxbXNmcmFvc29jb2xwc2xyZnZxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTIxNzcyOTEsImV4cCI6MjA2Nzc1MzI5MX0.ZGZIxxlCantVQ1WcA9j5VrYyk8PjgMjroX3h1-OQ8ko'
+          );
+          
+          await supabaseClient.auth.signOut();
+          // The auth protection script will handle the redirect
+        } catch (error) {
+          console.error('Sign out error:', error);
+          alert('Error signing out. Please try again.');
+        }
+      }
+    </script>
+  </body>
+</html>
