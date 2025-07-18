@@ -20,6 +20,30 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
+    <!-- MathJax for LaTeX Rendering -->
+    <script>
+      window.MathJax = {
+        tex: {
+          inlineMath: [['$', '$']],
+          displayMath: [['$$', '$$']],
+          processEscapes: true,
+          processEnvironments: true
+        },
+        options: {
+          ignoreHtmlClass: 'tex2jax_ignore',
+          processHtmlClass: 'tex2jax_process'
+        }
+      };
+    </script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <!-- Marked.js for Markdown Parsing -->
+    <script src="https://cdn.jsdelivr.net/npm/marked@11.1.1/marked.min.js"></script>
+    
+    <!-- DOMPurify for XSS protection -->
+    <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js"></script>
+    
     <!-- Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     
@@ -69,18 +93,18 @@
         
         <nav class="nav animate-slideDown">
           <button class="nav-button active animate-glow" id="canvasTab">Canvas</button>
-          <button class="nav-button animate-magnetic" id="savedCanvasesTab">Saved Canvases</button>
+          <button class="nav-button animate-magnetic" id="savedCanvasesTab">Load Canvas</button>
           <button class="nav-button animate-magnetic">Templates</button>
           <button class="nav-button animate-magnetic">Collaborate</button>
         </nav>
         
         <div class="header-actions">
-          <button class="action-button secondary animate-holographic">
+          <button class="action-button secondary animate-holographic" id="chatButton">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <path d="M14 8C14 11.3137 11.3137 14 8 14C4.68629 14 2 11.3137 2 8C2 4.68629 4.68629 2 8 2C11.3137 2 14 4.68629 14 8Z" stroke="currentColor" stroke-width="1.5"/>
-              <path d="M8 5V8L10 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              <path d="M2 6C2 4.89543 2.89543 4 4 4H12C13.1046 4 14 4.89543 14 6V9C14 10.1046 13.1046 11 12 11H8L5 13V11H4C2.89543 11 2 10.1046 2 9V6Z" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M6 7H10M6 8.5H8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
             </svg>
-            History
+            Chat
           </button>
           <button class="action-button primary cyberpunk-border">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
@@ -105,6 +129,13 @@
                 <path d="M4 8L8 12L12 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
               Save Canvas
+            </button>
+            <button class="quick-action-btn animate-magnetic" id="loadCanvas">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M3 13H13C14.1046 13 15 12.1046 15 11V3C15 1.89543 14.1046 1 13 1H3C1.89543 1 1 1.89543 1 3V11C1 12.1046 1.89543 13 3 13Z" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M12 8L8 4L4 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              Load Canvas
             </button>
             <button class="quick-action-btn animate-magnetic" id="newCanvas">
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
@@ -264,11 +295,11 @@
       </div>
     </div>
 
-    <!-- Saved Canvases Modal -->
+    <!-- Load Canvas Modal -->
     <div class="saved-canvases-modal" id="savedCanvasesModal">
       <div class="saved-canvases-content">
         <div class="saved-canvases-header">
-          <h3>Saved Canvases</h3>
+          <h3>Load Canvas</h3>
           <button class="close-modal" id="closeSavedCanvases">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
               <path d="M12 4L4 12M4 4L12 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
@@ -389,6 +420,8 @@
     </div>
 
     <!-- JavaScript -->
+    <script src="./config.js"></script>
+    <script type="module" src="./gemini-service.js"></script>
     <script type="module" src="./app.js"></script>
   </body>
 </html>

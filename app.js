@@ -6,6 +6,75 @@ import { createRoot } from "https://esm.sh/react-dom@19.0.0/client";
 // Make ExcalidrawLib available globally for debugging
 window.ExcalidrawLib = ExcalidrawLib;
 
+// Markdown Formatter Utility
+class MarkdownFormatter {
+  constructor() {
+    // Configure marked options
+    if (typeof marked !== 'undefined') {
+      marked.setOptions({
+        breaks: true,
+        gfm: true,
+        headerIds: false,
+        mangle: false
+      });
+    }
+  }
+
+  formatMessage(content) {
+    if (!content || typeof marked === 'undefined') {
+      return content;
+    }
+
+    try {
+      // Parse markdown to HTML
+      let html = marked.parse(content);
+      
+      // Sanitize HTML to prevent XSS attacks
+      if (typeof DOMPurify !== 'undefined') {
+        html = DOMPurify.sanitize(html, {
+          ALLOWED_TAGS: [
+            'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
+            'p', 'br', 'strong', 'em', 'u', 's',
+            'ul', 'ol', 'li',
+            'blockquote', 'code', 'pre',
+            'a', 'img',
+            'table', 'thead', 'tbody', 'tr', 'th', 'td',
+            'hr', 'div', 'span'
+          ],
+          ALLOWED_ATTR: ['href', 'title', 'alt', 'src', 'class']
+        });
+      }
+
+      return html;
+    } catch (error) {
+      console.warn('Markdown parsing error:', error);
+      return content; // Fallback to original content
+    }
+  }
+
+  // Enhanced formatting for AI responses with proper spacing
+  formatAIResponse(content) {
+    if (!content) return content;
+
+    // First apply markdown formatting
+    let formatted = this.formatMessage(content);
+
+    // Add CSS classes for better styling
+    formatted = formatted.replace(/<h2>/g, '<h2 class="ai-section-header">');
+    formatted = formatted.replace(/<h3>/g, '<h3 class="ai-subsection-header">');
+    formatted = formatted.replace(/<hr>/g, '<hr class="ai-section-divider">');
+    formatted = formatted.replace(/<ul>/g, '<ul class="ai-list">');
+    formatted = formatted.replace(/<ol>/g, '<ol class="ai-ordered-list">');
+    formatted = formatted.replace(/<code>/g, '<code class="ai-inline-code">');
+    formatted = formatted.replace(/<pre>/g, '<pre class="ai-code-block">');
+
+    return formatted;
+  }
+}
+
+// Initialize markdown formatter
+const markdownFormatter = new MarkdownFormatter();
+
 // Screenshot functionality
 class ScreenshotTool {
   constructor() {
@@ -334,9 +403,10 @@ class AIResultsManager {
       this.renderResults();
 
       // Add AI response after a delay
-      setTimeout(() => {
+      setTimeout(async () => {
         existingResult.isTyping = false;
-        const aiResponse = this.generateAIResponse(userMessage);
+        const conversationHistory = window.GeminiService?.formatConversationHistory(existingResult.messages) || [];
+        const aiResponse = await this.generateAIResponse(userMessage, imageData, conversationHistory);
         existingResult.messages.push({
           type: 'ai',
           content: aiResponse,
@@ -374,9 +444,16 @@ class AIResultsManager {
       imageData: imageData
     });
 
+    // Show typing indicator
+    result.isTyping = true;
+    this.results.unshift(result);
+    this.renderResults();
+    this.show();
+
     // Add AI response after a delay
-    setTimeout(() => {
-      const aiResponse = this.generateAIResponse(result.userMessage);
+    setTimeout(async () => {
+      result.isTyping = false;
+      const aiResponse = await this.generateAIResponse(result.userMessage, imageData);
       result.messages.push({
         type: 'ai',
         content: aiResponse,
@@ -384,22 +461,35 @@ class AIResultsManager {
       });
       this.renderResults();
     }, 1500);
-    
-    this.results.unshift(result);
-    this.renderResults();
-    this.show();
   }
 
-  generateAIResponse(userMessage) {
-    const responses = [
-      "I can see this is an interesting diagram! It looks like you're working on a workflow or process flow. The shapes and connections suggest a systematic approach. Would you like me to suggest improvements for clarity or organization?",
-      "This appears to be a brainstorming session with various connected ideas. I notice some clustering of concepts. Consider grouping similar elements with color coding or boundaries to make relationships clearer.",
-      "Great visual thinking! I can see you're mapping out relationships between different elements. The layout suggests hierarchical thinking. Would you like help organizing this into a more structured format?",
-      "This diagram shows good use of different shapes to represent different types of information. The flow seems logical, but you might want to add some decision points or conditional branches to make the process more complete.",
-      "I can see you're working on a conceptual map or system design. The connections between elements are helpful. Consider adding labels to the connecting lines to explain the relationships more clearly."
-    ];
-    
-    return responses[Math.floor(Math.random() * responses.length)];
+  async generateAIResponse(userMessage, imageData = null, conversationHistory = []) {
+    try {
+      // Use Gemini service if available
+      if (window.GeminiService) {
+        if (imageData) {
+          // For image + text analysis
+          return await window.GeminiService.createVisionCompletion(userMessage, imageData, conversationHistory);
+        } else {
+          // For text-only conversations
+          return await window.GeminiService.createTextCompletion(userMessage, conversationHistory);
+        }
+      }
+      
+      // Fallback to mock responses if service not available
+      const responses = [
+        "I can see this is an interesting diagram! It looks like you're working on a workflow or process flow. The shapes and connections suggest a systematic approach. Would you like me to suggest improvements for clarity or organization?",
+        "This appears to be a brainstorming session with various connected ideas. I notice some clustering of concepts. Consider grouping similar elements with color coding or boundaries to make relationships clearer.",
+        "Great visual thinking! I can see you're mapping out relationships between different elements. The layout suggests hierarchical thinking. Would you like help organizing this into a more structured format?",
+        "This diagram shows good use of different shapes to represent different types of information. The flow seems logical, but you might want to add some decision points or conditional branches to make the process more complete.",
+        "I can see you're working on a conceptual map or system design. The connections between elements are helpful. Consider adding labels to the connecting lines to explain the relationships more clearly."
+      ];
+      
+      return responses[Math.floor(Math.random() * responses.length)];
+    } catch (error) {
+      console.error('AI Response Error:', error);
+      return "I'm having trouble processing your request right now. Please try again in a moment.";
+    }
   }
 
   renderResults() {
@@ -430,8 +520,8 @@ class AIResultsManager {
                 <img src="${message.imageData}" alt="Canvas screenshot" class="message-image" />
               ` : ''}
 
-              <div class="message-bubble ${message.type}">
-                ${message.content}
+              <div class="message-bubble ${message.type} tex2jax_process">
+                ${message.type === 'ai' ? markdownFormatter.formatAIResponse(message.content) : message.content}
               </div>
               <span class="message-time">${message.timestamp}</span>
             </div>
@@ -470,6 +560,13 @@ class AIResultsManager {
 
     // Add event listeners for chat inputs
     this.attachChatListeners();
+    
+    // Render LaTeX math with MathJax
+    if (window.MathJax) {
+      MathJax.typesetPromise([this.content]).catch((err) => {
+        console.warn('MathJax rendering error:', err);
+      });
+    }
   }
 
   attachChatListeners() {
@@ -524,9 +621,10 @@ class AIResultsManager {
     this.renderResults();
 
     // Generate AI response after delay
-    setTimeout(() => {
+    setTimeout(async () => {
       result.isTyping = false;
-      const aiResponse = this.generateFollowUpResponse(message);
+      const conversationHistory = window.GeminiService?.formatConversationHistory(result.messages) || [];
+      const aiResponse = await this.generateAIResponse(message.trim(), null, conversationHistory);
       result.messages.push({
         type: 'ai',
         content: aiResponse,
@@ -542,30 +640,6 @@ class AIResultsManager {
     }, 1000 + Math.random() * 1000);
   }
 
-  generateFollowUpResponse(userMessage) {
-    const message = userMessage.toLowerCase();
-    
-    if (message.includes('color') || message.includes('colours')) {
-      return "Great question about colors! I'd suggest using a consistent color palette. Try using warmer colors (reds, oranges) for important elements and cooler colors (blues, greens) for supporting information. This creates visual hierarchy.";
-    } else if (message.includes('improve') || message.includes('better')) {
-      return "Here are some ways to improve your diagram: 1) Add clear labels to all elements, 2) Use consistent spacing between items, 3) Group related concepts with boxes or backgrounds, 4) Add a legend if you're using symbols.";
-    } else if (message.includes('organize') || message.includes('structure')) {
-      return "For better organization, try the top-down approach: put the main concept at the top, then branch out to subcategories below. You could also use a grid layout or the mind map structure radiating from a center point.";
-    } else if (message.includes('flow') || message.includes('process')) {
-      return "To enhance process flow, make sure your arrows clearly indicate direction. Consider adding decision diamonds for yes/no points, and use different shapes for different types of steps (rectangles for processes, circles for start/end points).";
-    } else if (message.includes('text') || message.includes('font') || message.includes('label')) {
-      return "For text clarity, keep font sizes consistent within each hierarchy level. Use bold for headings, regular weight for body text. Ensure there's enough contrast between text and background colors for readability.";
-    } else {
-      const genericResponses = [
-        "That's a thoughtful question! Based on what I can see in your diagram, I'd recommend focusing on clarity and consistency in your visual elements.",
-        "Interesting point! You might want to consider how users will navigate through your diagram - adding clear entry and exit points could help.",
-        "Good thinking! Try to maintain visual balance - if one side of your diagram feels heavy, redistribute some elements to create better symmetry.",
-        "I see what you're getting at. Consider adding some whitespace around dense areas to give the eye places to rest while scanning your diagram.",
-        "That's worth exploring! You could experiment with different layouts - sometimes a simple reorganization can make a big difference in comprehension."
-      ];
-      return genericResponses[Math.floor(Math.random() * genericResponses.length)];
-    }
-  }
 }
 
 // Canvas Management
@@ -1214,11 +1288,15 @@ const App = () => {
     // Quick action buttons
     const resetSceneBtn = document.getElementById('resetScene');
     const saveCanvasBtn = document.getElementById('saveCanvas');
+    const loadCanvasBtn = document.getElementById('loadCanvas');
     const newCanvasBtn = document.getElementById('newCanvas');
     
     // Canvas control buttons (in header)
     const newCanvasControlBtn = document.getElementById('newCanvasControl');
     const clearCanvasControlBtn = document.getElementById('clearCanvasControl');
+    
+    // Header action buttons
+    const chatButton = document.getElementById('chatButton');
     
     // Navigation buttons
     const savedCanvasesTab = document.getElementById('savedCanvasesTab');
@@ -1236,6 +1314,10 @@ const App = () => {
       saveCanvasBtn.addEventListener('click', handleSaveCanvas);
     }
 
+    if (loadCanvasBtn) {
+      loadCanvasBtn.addEventListener('click', handleShowSavedCanvases);
+    }
+
     if (newCanvasBtn) {
       newCanvasBtn.addEventListener('click', handleNewCanvas);
     }
@@ -1246,6 +1328,12 @@ const App = () => {
 
     if (clearCanvasControlBtn) {
       clearCanvasControlBtn.addEventListener('click', resetScene);
+    }
+
+    if (chatButton) {
+      chatButton.addEventListener('click', () => {
+        aiResultsManager.show();
+      });
     }
 
     if (savedCanvasesTab) {

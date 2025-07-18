@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iris Whiteboard - AI-Powered Digital Canvas</title>
+    <meta name="description" content="Unleash your ideas with AI-powered whiteboarding. The intelligent whiteboard that understands your thoughts and helps you create.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="./landing-styles.css">
+    
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- Cookie Consent -->
+    <script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js" data-cfasync="false"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css" />
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header" id="header">
+        <nav class="nav-container">
+            <div class="nav-brand">
+                <div class="logo">
+                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="40" height="40" rx="12" fill="url(#gradient1)"/>
+                        <path d="M10 15L20 10L30 15L20 20L10 15Z" fill="white" fill-opacity="0.9"/>
+                        <path d="M10 25L20 20L30 25L20 30L10 25Z" fill="white" fill-opacity="0.7"/>
+                        <circle cx="20" cy="20" r="2" fill="white" opacity="0.8"/>
+                        <defs>
+                            <linearGradient id="gradient1" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+                                <stop stop-color="#8B5CF6"/>
+                                <stop offset="0.5" stop-color="#3B82F6"/>
+                                <stop offset="1" stop-color="#06B6D4"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                </div>
+                <span class="brand-name">Iris Whiteboard</span>
+            </div>
+            
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#features" class="nav-link">Features</a></li>
+                <li><a href="#demo" class="nav-link">Demo</a></li>
+                <li><a href="#use-cases" class="nav-link">Use Cases</a></li>
+                <li><a href="#pricing" class="nav-link">Pricing</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+            
+            <div class="nav-actions">
+                <a href="./auth.html" class="btn-secondary">Login</a>
+                <a href="./index.html" class="btn-primary">Get Started Free</a>
+            </div>
+            
+            <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="hero-container">
+            <div class="hero-content" data-aos="fade-up" data-aos-duration="1000">
+                <h1 class="hero-title">
+                    Unleash Your Ideas with 
+                    <span class="gradient-text">AI-Powered Whiteboarding</span>
+                </h1>
+                <p class="hero-subtitle">
+                    The intelligent whiteboard that understands your thoughts and helps you create. 
+                    Collaborate, visualize, and innovate with the power of artificial intelligence.
+                </p>
+                <div class="hero-actions">
+                    <a href="./index.html" class="btn-primary btn-large">Start Whiteboarding Now</a>
+                    <button class="btn-secondary btn-large" id="watchDemo">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path d="M8 5L15 10L8 15V5Z" fill="currentColor"/>
+                        </svg>
+                        Watch Demo
+                    </button>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <span class="stat-number">10K+</span>
+                        <span class="stat-label">Active Users</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">50K+</span>
+                        <span class="stat-label">Canvases Created</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">4.8/5</span>
+                        <span class="stat-label">User Rating</span>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-visual" data-aos="fade-left" data-aos-duration="1200" data-aos-delay="200">
+                <div class="hero-demo-container">
+                    <div class="demo-canvas">
+                        <div class="demo-ai-chat">
+                            <div class="ai-indicator"></div>
+                            <span>AI Assistant</span>
+                        </div>
+                        <div class="demo-equation">
+                            <span class="equation-text">f(x) = 2x, f(0) = ?</span>
+                            <div class="ai-response">
+                                <div class="ai-avatar">
+                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                        <path d="M8 1L10.5 6H15L11 9.5L12.5 15L8 12L3.5 15L5 9.5L1 6H5.5L8 1Z" fill="currentColor"/>
+                                    </svg>
+                                </div>
+                                <span>f(0) = 2(0) = 0</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="hero-background">
+            <div class="bg-grid"></div>
+            <div class="bg-gradient"></div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2>Unlock Your Creative Potential</h2>
+                <p>Discover powerful features that make Iris Whiteboard the smartest choice for visual collaboration</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="feature-icon">
+                        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                            <path d="M16 4L20 12H28L22 18L24 28L16 24L8 28L10 18L4 12H12L16 4Z" stroke="currentColor" stroke-width="2" fill="none"/>
+                        </svg>
+                    </div>
+                    <h3>Intelligent AI Assistance</h3>
+                    <p>Get instant help with math problems, design suggestions, and creative ideas. Our AI understands context and provides relevant assistance as you work.</p>
+                    <div class="feature-demo">
+                        <div class="mini-animation ai-thinking"></div>
+                    </div>
+                </div>
+                
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="feature-icon">
+                        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                            <path d="M8 8H24V24H8V8Z" stroke="currentColor" stroke-width="2" fill="none"/>
+                            <path d="M12 12H20M12 16H20M12 20H16" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                    </div>
+                    <h3>Seamless Collaboration</h3>
+                    <p>Work together in real-time with your team. Share ideas, leave comments, and collaborate effortlessly across any device or location.</p>
+                    <div class="feature-demo">
+                        <div class="mini-animation collaboration-dots"></div>
+                    </div>
+                </div>
+                
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="feature-icon">
+                        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                            <path d="M4 8L16 4L28 8L16 12L4 8Z" stroke="currentColor" stroke-width="2" fill="none"/>
+                            <path d="M4 16L16 12L28 16L16 20L4 16Z" stroke="currentColor" stroke-width="2" fill="none"/>
+                            <path d="M4 24L16 20L28 24L16 28L4 24Z" stroke="currentColor" stroke-width="2" fill="none"/>
+                        </svg>
+                    </div>
+                    <h3>Intuitive Drawing Tools</h3>
+                    <p>Express your ideas with precision using our advanced drawing tools. From simple sketches to complex diagrams, create with confidence.</p>
+                    <div class="feature-demo">
+                        <div class="mini-animation drawing-tools"></div>
+                    </div>
+                </div>
+                
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="400">
+                    <div class="feature-icon">
+                        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                            <rect x="4" y="4" width="24" height="24" rx="4" stroke="currentColor" stroke-width="2" fill="none"/>
+                            <path d="M8 16L12 20L24 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <h3>Dynamic Templates</h3>
+                    <p>Start quickly with our library of professionally designed templates. From flowcharts to wireframes, find the perfect starting point.</p>
+                    <div class="feature-demo">
+                        <div class="mini-animation template-grid"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Demo Section -->
+    <section class="demo-section" id="demo">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2>Experience Iris Whiteboard in Action</h2>
+                <p>Try our interactive demo and see how AI can enhance your creative process</p>
+            </div>
+            
+            <div class="demo-container" data-aos="fade-up" data-aos-delay="200">
+                <div class="demo-interface">
+                    <div class="demo-header">
+                        <div class="demo-controls">
+                            <div class="control-dot red"></div>
+                            <div class="control-dot yellow"></div>
+                            <div class="control-dot green"></div>
+                        </div>
+                        <span class="demo-title">Interactive Demo</span>
+                    </div>
+                    
+                    <div class="demo-canvas-area" id="demoCanvas">
+                        <div class="demo-toolbar">
+                            <button class="tool-btn active" data-tool="draw">
+                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                    <path d="M3 17L17 3M3 17L7 13L17 3M3 17H7L17 7" stroke="currentColor" stroke-width="1.5"/>
+                                </svg>
+                            </button>
+                            <button class="tool-btn" data-tool="text">
+                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                    <path d="M4 4H16M10 4V16M8 16H12" stroke="currentColor" stroke-width="1.5"/>
+                                </svg>
+                            </button>
+                            <button class="tool-btn" data-tool="ai">
+                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                    <path d="M10 2L12.5 7H17L13 10.5L14.5 17L10 14L5.5 17L7 10.5L3 7H7.5L10 2Z" fill="currentColor"/>
+                                </svg>
+                            </button>
+                        </div>
+                        
+                        <div class="demo-workspace">
+                            <canvas id="interactiveCanvas" width="600" height="400"></canvas>
+                            <div class="demo-ai-panel" id="demoAiPanel">
+                                <div class="ai-chat-header">
+                                    <div class="ai-indicator active"></div>
+                                    <span>AI Assistant</span>
+                                </div>
+                                <div class="ai-suggestion" id="aiSuggestion">
+                                    Click the AI button and try: "Solve 2x + 3 = 7"
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="demo-instructions">
+                        <div class="instruction">
+                            <span class="step">1</span>
+                            <span>Try drawing with the pen tool</span>
+                        </div>
+                        <div class="instruction">
+                            <span class="step">2</span>
+                            <span>Add text with the text tool</span>
+                        </div>
+                        <div class="instruction">
+                            <span class="step">3</span>
+                            <span>Ask the AI for help with math or ideas</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="demo-cta">
+                    <a href="./index.html" class="btn-primary btn-large">Try Full Demo</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Use Cases Section -->
+    <section class="use-cases" id="use-cases">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2>Who Benefits from Iris Whiteboard?</h2>
+                <p>Discover how different professionals use Iris Whiteboard to enhance their work</p>
+            </div>
+            
+            <div class="use-cases-carousel" data-aos="fade-up" data-aos-delay="200">
+                <div class="carousel-container">
+                    <div class="carousel-track" id="useCasesTrack">
+                        <div class="use-case-card">
+                            <div class="use-case-icon">
+                                <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                                    <path d="M12 8H36V40H12V8Z" stroke="currentColor" stroke-width="2" fill="none"/>
+                                    <path d="M16 16H32M16 24H32M16 32H28" stroke="currentColor" stroke-width="2"/>
+                                </svg>
+                            </div>
+                            <h3>Educators</h3>
+                            <p>Create engaging lessons, solve problems step-by-step, and help students visualize complex concepts with AI-powered explanations.</p>
+                        </div>
+                        
+                        <div class="use-case-card">
+                            <div class="use-case-icon">
+                                <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                                    <rect x="8" y="8" width="32" height="32" rx="4" stroke="currentColor" stroke-width="2" fill="none"/>
+                                    <path d="M16 20L20 24L32 12" stroke="currentColor" stroke-width="2"/>
+                                </svg>
+                            </div>
+                            <h3>Developers</h3>
+                            <p>Design system architectures, plan code structures, and collaborate on technical solutions with intelligent diagramming tools.</p>
+                        </div>
+                        
+                        <div class="use-case-card">
+                            <div class="use-case-icon">
+                                <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                                    <circle cx="24" cy="24" r="16" stroke="currentColor" stroke-width="2" fill="none"/>
+                                    <path d="M24 8V24L32 32" stroke="currentColor" stroke-width="2"/>
+                                </svg>
+                            </div>
+                            <h3>Designers</h3>
+                            <p>Sketch wireframes, create user flows, and iterate on designs with AI suggestions for better user experiences.</p>
+                        </div>
+                        
+                        <div class="use-case-card">
+                            <div class="use-case-icon">
+                                <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                                    <path d="M8 16L24 8L40 16V32L24 40L8 32V16Z" stroke="currentColor" stroke-width="2" fill="none"/>
+                                    <path d="M24 8V24M8 16L24 24L40 16" stroke="currentColor" stroke-width="2"/>
+                                </svg>
+                            </div>
+                            <h3>Project Managers</h3>
+                            <p>Plan projects, track progress, and facilitate team meetings with intelligent organization and timeline tools.</p>
+                        </div>
+                        
+                        <div class="use-case-card">
+                            <div class="use-case-icon">
+                                <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                                    <path d="M24 4L30 18H44L34 28L38 44L24 36L10 44L14 28L4 18H18L24 4Z" stroke="currentColor" stroke-width="2" fill="none"/>
+                                </svg>
+                            </div>
+                            <h3>Remote Teams</h3>
+                            <p>Bridge the distance with real-time collaboration, shared whiteboards, and AI-assisted communication tools.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="carousel-controls">
+                    <button class="carousel-btn prev" id="prevUseCase">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </button>
+                    <button class="carousel-btn next" id="nextUseCase">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials" id="testimonials">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2>What Our Users Say</h2>
+                <p>Join thousands of satisfied users who've transformed their workflow with Iris Whiteboard</p>
+            </div>
+            
+            <div class="testimonials-grid" data-aos="fade-up" data-aos-delay="200">
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <div class="stars">
+                            <span>★★★★★</span>
+                        </div>
+                        <p>"Iris Whiteboard has revolutionized how I teach mathematics. The AI assistant helps students understand complex problems in real-time."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'><circle cx='24' cy='24' r='24' fill='%238B5CF6'/><text x='24' y='30' text-anchor='middle' fill='white' font-size='20' font-family='Arial'>SM</text></svg>" alt="Sarah Martinez">
+                        </div>
+                        <div class="author-info">
+                            <h4>Sarah Martinez</h4>
+                            <span>Mathematics Teacher</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <div class="stars">
+                            <span>★★★★★</span>
+                        </div>
+                        <p>"The collaborative features are incredible. Our distributed team can brainstorm and plan projects as if we're in the same room."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'><circle cx='24' cy='24' r='24' fill='%233B82F6'/><text x='24' y='30' text-anchor='middle' fill='white' font-size='20' font-family='Arial'>MJ</text></svg>" alt="Michael Johnson">
+                        </div>
+                        <div class="author-info">
+                            <h4>Michael Johnson</h4>
+                            <span>Product Manager, TechCorp</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <div class="stars">
+                            <span>★★★★★</span>
+                        </div>
+                        <p>"As a designer, I love how intuitive the tools are. The AI suggestions have actually improved my design process significantly."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'><circle cx='24' cy='24' r='24' fill='%2306B6D4'/><text x='24' y='30' text-anchor='middle' fill='white' font-size='20' font-family='Arial'>ER</text></svg>" alt="Emily Rodriguez">
+                        </div>
+                        <div class="author-info">
+                            <h4>Emily Rodriguez</h4>
+                            <span>UX Designer</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="pricing" id="pricing">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2>Simple Plans for Every Need</h2>
+                <p>Choose the perfect plan to unlock your creative potential</p>
+                
+                <div class="pricing-toggle">
+                    <span class="toggle-label">Monthly</span>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="annualToggle">
+                        <span class="toggle-slider"></span>
+                    </label>
+                    <span class="toggle-label">Annual <span class="discount">Save 20%</span></span>
+                </div>
+            </div>
+            
+            <div class="pricing-cards" data-aos="fade-up" data-aos-delay="200">
+                <div class="pricing-card">
+                    <div class="plan-header">
+                        <h3>Free</h3>
+                        <div class="price">
+                            <span class="currency">$</span>
+                            <span class="amount" data-monthly="0" data-annual="0">0</span>
+                            <span class="period">/month</span>
+                        </div>
+                        <p>Perfect for getting started</p>
+                    </div>
+                    <ul class="plan-features">
+                        <li>3 Active Canvases</li>
+                        <li>Basic AI Assistance</li>
+                        <li>Standard Drawing Tools</li>
+                        <li>Export to PNG/PDF</li>
+                        <li>Community Support</li>
+                    </ul>
+                    <a href="./index.html" class="btn-secondary btn-full">Get Started Free</a>
+                </div>
+                
+                <div class="pricing-card featured">
+                    <div class="featured-badge">Most Popular</div>
+                    <div class="plan-header">
+                        <h3>Pro</h3>
+                        <div class="price">
+                            <span class="currency">$</span>
+                            <span class="amount" data-monthly="12" data-annual="10">12</span>
+                            <span class="period">/month</span>
+                        </div>
+                        <p>Best for professionals</p>
+                    </div>
+                    <ul class="plan-features">
+                        <li>Unlimited Canvases</li>
+                        <li>Advanced AI Features</li>
+                        <li>Premium Templates</li>
+                        <li>Real-time Collaboration</li>
+                        <li>Priority Support</li>
+                        <li>Version History</li>
+                        <li>Custom Integrations</li>
+                    </ul>
+                    <a href="./index.html" class="btn-primary btn-full">Choose Pro</a>
+                </div>
+                
+                <div class="pricing-card">
+                    <div class="plan-header">
+                        <h3>Business</h3>
+                        <div class="price">
+                            <span class="currency">$</span>
+                            <span class="amount" data-monthly="24" data-annual="20">24</span>
+                            <span class="period">/month</span>
+                        </div>
+                        <p>For teams and organizations</p>
+                    </div>
+                    <ul class="plan-features">
+                        <li>Everything in Pro</li>
+                        <li>Team Management</li>
+                        <li>Advanced Security</li>
+                        <li>SSO Integration</li>
+                        <li>Dedicated Support</li>
+                        <li>Custom Branding</li>
+                        <li>API Access</li>
+                        <li>Analytics Dashboard</li>
+                    </ul>
+                    <a href="./index.html" class="btn-secondary btn-full">Choose Business</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq" id="faq">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2>Frequently Asked Questions</h2>
+                <p>Find answers to common questions about Iris Whiteboard</p>
+            </div>
+            
+            <div class="faq-container" data-aos="fade-up" data-aos-delay="200">
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>How does the AI assistance work?</span>
+                        <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Our AI assistant uses advanced natural language processing to understand your questions and provide relevant help. Whether you need help solving math problems, generating ideas, or getting design suggestions, the AI analyzes your canvas content and provides contextual assistance.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Can I collaborate with my team in real-time?</span>
+                        <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Yes! Iris Whiteboard supports real-time collaboration. Multiple users can work on the same canvas simultaneously, with live cursors, instant updates, and integrated chat. All changes are automatically synchronized across all connected devices.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Is my data secure and private?</span>
+                        <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Absolutely. We use enterprise-grade encryption for all data transmission and storage. Your canvases are private by default, and you have full control over sharing permissions. We comply with GDPR, CCPA, and other privacy regulations.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>What devices and browsers are supported?</span>
+                        <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Iris Whiteboard works on all modern browsers including Chrome, Firefox, Safari, and Edge. It's fully responsive and works great on desktops, tablets, and mobile devices. No downloads or installations required.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Can I export my canvases?</span>
+                        <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Yes, you can export your canvases in multiple formats including PNG, PDF, SVG, and our native format. This makes it easy to share your work, include it in presentations, or archive your designs.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Do you offer educational discounts?</span>
+                        <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Yes! We offer significant discounts for educational institutions, students, and teachers. Contact our support team with your educational credentials to learn about available discounts and special academic pricing.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA Section -->
+    <section class="final-cta">
+        <div class="container">
+            <div class="cta-content" data-aos="fade-up">
+                <h2>Ready to Transform Your Ideas?</h2>
+                <p>Join thousands of innovators using Iris Whiteboard to bring their visions to life</p>
+                <div class="cta-actions">
+                    <a href="./index.html" class="btn-primary btn-large">Get Started Free</a>
+                    <p class="cta-note">No credit card required • Start creating in seconds</p>
+                </div>
+            </div>
+        </div>
+        <div class="cta-background">
+            <div class="bg-particles"></div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="32" height="32" rx="8" fill="url(#footerGradient)"/>
+                            <path d="M8 12L16 8L24 12L16 16L8 12Z" fill="white" fill-opacity="0.9"/>
+                            <path d="M8 20L16 16L24 20L16 24L8 20Z" fill="white" fill-opacity="0.7"/>
+                            <defs>
+                                <linearGradient id="footerGradient" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
+                                    <stop stop-color="#8B5CF6"/>
+                                    <stop offset="1" stop-color="#3B82F6"/>
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                    </div>
+                    <h3>Iris Whiteboard</h3>
+                    <p>The intelligent whiteboard that transforms how you create, collaborate, and innovate.</p>
+                </div>
+                
+                <div class="footer-links">
+                    <div class="link-group">
+                        <h4>Product</h4>
+                        <ul>
+                            <li><a href="#features">Features</a></li>
+                            <li><a href="#demo">Demo</a></li>
+                            <li><a href="#pricing">Pricing</a></li>
+                            <li><a href="#">Templates</a></li>
+                            <li><a href="#">Integrations</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="link-group">
+                        <h4>Company</h4>
+                        <ul>
+                            <li><a href="#about">About Us</a></li>
+                            <li><a href="#">Blog</a></li>
+                            <li><a href="#">Careers</a></li>
+                            <li><a href="#contact">Contact</a></li>
+                            <li><a href="#">Press Kit</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="link-group">
+                        <h4>Support</h4>
+                        <ul>
+                            <li><a href="#">Help Center</a></li>
+                            <li><a href="#">Documentation</a></li>
+                            <li><a href="#">API Reference</a></li>
+                            <li><a href="#">Community</a></li>
+                            <li><a href="#">Status</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="link-group">
+                        <h4>Legal</h4>
+                        <ul>
+                            <li><a href="#">Privacy Policy</a></li>
+                            <li><a href="#">Terms of Service</a></li>
+                            <li><a href="#">Cookie Policy</a></li>
+                            <li><a href="#">GDPR</a></li>
+                            <li><a href="#">Security</a></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="footer-social">
+                    <h4>Follow Us</h4>
+                    <div class="social-links">
+                        <a href="#" aria-label="Twitter">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M23 3A10.9 10.9 0 0 1 20.1 4.1A4.48 4.48 0 0 0 22.46 2A9 9 0 0 1 19.29 3.63A4.48 4.48 0 0 0 12 7.68V8.5A10.66 10.66 0 0 1 3 4S-1 13 8 17A11.64 11.64 0 0 1 0 18C9 22.5 20 17.5 20 8.5A4.5 4.5 0 0 0 19.43 6.5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </a>
+                        <a href="#" aria-label="LinkedIn">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M16 8A6 6 0 0 1 22 14V21H18V14A2 2 0 0 0 14 14V21H10V9H14V11A6 6 0 0 1 16 8Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <rect x="2" y="9" width="4" height="12" stroke="currentColor" stroke-width="2"/>
+                                <circle cx="4" cy="4" r="2" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                        </a>
+                        <a href="#" aria-label="GitHub">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M9 19C4 20.5 4 16.5 2 16M22 16V20.5C22 21.8807 20.8807 23 19.5 23H4.5C3.11929 23 2 21.8807 2 20.5V16M22 16L18.5 12.5L22 9M2 16L5.5 12.5L2 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </a>
+                        <a href="#" aria-label="Discord">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M20.317 4.492C18.814 3.808 17.204 3.314 15.527 3.026C15.504 3.022 15.481 3.032 15.468 3.054C15.265 3.424 15.043 3.909 14.892 4.291C13.111 4.025 11.34 4.025 9.608 4.291C9.457 3.899 9.229 3.424 9.025 3.054C9.012 3.033 8.989 3.023 8.966 3.026C7.29 3.313 5.68 3.807 4.177 4.492C4.167 4.496 4.159 4.503 4.154 4.512C1.206 8.816 0.419 12.995 0.845 17.122C0.847 17.142 0.857 17.161 0.871 17.173C2.893 18.684 4.855 19.574 6.782 20.152C6.805 20.159 6.829 20.15 6.842 20.131C7.301 19.492 7.712 18.818 8.068 18.109C8.082 18.078 8.068 18.044 8.037 18.034C7.389 17.795 6.771 17.504 6.187 17.169C6.152 17.148 6.149 17.098 6.181 17.073C6.295 16.988 6.409 16.9 6.518 16.81C6.533 16.797 6.554 16.794 6.572 16.803C10.455 18.56 14.684 18.56 18.518 16.803C18.536 16.793 18.557 16.796 18.573 16.809C18.682 16.899 18.796 16.988 18.911 17.073C18.943 17.098 18.941 17.148 18.906 17.169C18.322 17.509 17.704 17.795 17.055 18.033C17.024 18.043 17.011 18.078 17.025 18.109C17.387 18.817 17.798 19.491 18.251 20.13C18.263 20.15 18.288 20.159 18.311 20.152C20.248 19.574 22.21 18.684 24.232 17.173C24.247 17.161 24.256 17.143 24.258 17.123C24.756 12.353 23.498 8.209 20.34 4.513C20.336 4.503 20.328 4.496 20.317 4.492Z" fill="currentColor"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 Iris Whiteboard. All rights reserved.</p>
+                <div class="footer-bottom-links">
+                    <a href="#">Privacy</a>
+                    <a href="#">Terms</a>
+                    <a href="#">Cookies</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="./landing-scripts.js"></script>
+</body>
+</html>
